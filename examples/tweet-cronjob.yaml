@@ -22,7 +22,12 @@ spec:
           containers:
           - name: screens-twitter-creds
             image: capture-post:latest
+            volumeMounts:
+            - name: capture-screen-source
+              mountPath: /captures
             env:
+            - name: SCREEN_SOURCE
+              value: "/captures"
             - name: twitter_consumer_key
               valueFrom:
                 secretKeyRef:
@@ -43,6 +48,11 @@ spec:
                 secretKeyRef:
                   name: screens-twitter-creds
                   key: access_token_secret
+          volumes:
+          - name: capture-screen-source
+            awsElasticBlockStore:
+              volumeID: "<volume id>"
+              fsType: ext4
           restartPolicy: OnFailure
           imagePullSecrets:
           - name: myregistrykey
