@@ -12,11 +12,11 @@ def main():
 
         "consumer_key"        : os.environ['twitter_consumer_key'],
 
-        "consumer_secret"     : os.environ['consumer_secret'],
+        "consumer_secret"     : os.environ['twitter_consumer_secret'],
 
-        "access_token"        : os.environ['access_token'],
+        "access_token"        : os.environ['twitter_access_token'],
 
-        "access_token_secret" : os.environ['access_token_secret'] 
+        "access_token_secret" : os.environ['twitter_access_token_secret'] 
 
     }
 

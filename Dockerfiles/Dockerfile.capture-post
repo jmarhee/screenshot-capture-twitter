@@ -5,8 +5,8 @@ ENV twitter_consumer_secret ""
 ENV twitter_access_token ""
 ENV twitter_access_token_secret ""
 
-COPY requirements.txt /requirements.txt
-COPY post.py /post.py
+COPY ../requirements.txt /requirements.txt
+COPY ../post.py /post.py
 
 RUN pip install -r requirements.txt
 ENTRYPOINT python3 /post.py
