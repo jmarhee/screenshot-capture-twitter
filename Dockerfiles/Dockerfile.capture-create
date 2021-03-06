@@ -1,0 +1,8 @@
+FROM alpine:3.4
+
+COPY screens.sh /screens.sh
+
+ENV LNVC_DATA_PATH ""
+ENV LNVC_PREV_PATH ""
+
+ENTRYPOINT sh /screens.sh

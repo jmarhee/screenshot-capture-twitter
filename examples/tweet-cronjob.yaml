@@ -1,0 +1,48 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: screens-twitter-creds
+type: Opaque
+data:
+  consumer_key: 
+  consumer_secret: 
+  access_token: 
+  access_token_secret: 
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: screens-mgr
+spec:
+  schedule: "0 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: screens-twitter-creds
+            image: capture-post:latest
+            env:
+            - name: twitter_consumer_key
+              valueFrom:
+                secretKeyRef:
+                  name: screens-twitter-creds
+                  key: consumer_key
+            - name: twitter_consumer_secret
+              valueFrom:
+                secretKeyRef:
+                  name: screens-twitter-creds
+                  key: consumer_secret
+            - name: twitter_access_token
+              valueFrom:
+                secretKeyRef:
+                  name: screens-twitter-creds
+                  key: access_token
+            - name: twitter_access_token_secret
+              valueFrom:
+                secretKeyRef:
+                  name: screens-twitter-creds
+                  key: access_token_secret
+          restartPolicy: OnFailure
+          imagePullSecrets:
+          - name: myregistrykey
