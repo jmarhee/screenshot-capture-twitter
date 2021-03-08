@@ -6,6 +6,16 @@ This repo creates two containerized processes:
 2. Tweets that Screenshot (i.e. @WalkerScreens or @ScreenshotsVice on Twitter)
 3. Does this every 30 minutes.
 
+## Requirements
+
+For the screencapture process, your system must have [`ffmpeg`](https://ffmpeg.org/download.html) installed.
+
+Optionally, to run these tasks in containers, you must have `docker` installed. 
+
+For the sample `CronJob`, a Kubernetes cluster must be available-- you can run this using `hostPath` volumes on tools like `minikube` using the `minikube mount` option for local use. 
+
+To post any of these captures to twitter using `post.py`, you must have a [Twitter Developer Account](https://developer.twitter.com/en/docs/apps/overview) with an app configured. You will need the `consumer_token`, `consumer_secret`, `access_token`, and `access_token_secret` for your Twitter app. 
+
 ## Setup
 
 To create the container for a `Job` to generate the screenshots:
