@@ -25,6 +25,11 @@ for v in `ls $LNVC_DATA_PATH`; do \
     fi
     
     if [ -n "${DUMP_INTERVAL}" ]; then
-        ffmpeg -i $LNVC_DATA_PATH/$v -vf "select='not(mod(n,300))',setpts='N/(30*TB)'" -f image2 $LNVC_PREV_PATH/`head /dev/urandom | tr -dc A-Za-z0-9 | head -c 13 ; echo ''`.jpg
+        ffmpeg -i $LNVC_DATA_PATH/$v -vf fps=1/$DUMP_INTERVAL $LNVC_PREV_PATH/`head /dev/urandom | tr -dc A-Za-z0-9 | head -c 13 ; echo ''`.jpg
+        # The filenames will be prefixed by a random string, but per-video; if you'd like them randomized in totality, set `RANDOMIZE_NAMES`
+        if [ -n "${RANDOMIZE_NAMES}" ]; then
+            cd $LNVC_PREV_PATH ; \
+            for f in `ls`; do mv $f `head /dev/urandom | tr -dc A-Za-z0-9 | head -c 13 ; echo ''`.jpg; done
+        fi
     fi
 done
