@@ -28,7 +28,9 @@ These jobs are largely controlled by environment variables.
 
 ### Optional Variables
 
-Keep in mind that to produce screenshots, you will need to set, either, `DUMP_RANDOM` or `DUMP_INTERVAL` to `1`.
+Keep in mind that to produce screenshots, you will need to set, either, `DUMP_RANDOM` to `1` or `DUMP_INTERVAL` to the number of seconds between screenshots from a given video (i.e. `30` for one every seconds 30s). 
+
+`RANDOMIZE_NAMES` can be used with `DUMP_INTERVAL` to randomize the filenames (with the interval shots of the videos serialized by default-- i.e. `video1prefix-001`, `video2prefix-001`) if you want them shuffled in the directory rather than ordered.
 
 `REFRESH_SCREENS`: When set to any value, it will purge `LNVC_PREV_PATH` of `.jpg` files; this is useful if `DUMP_RANDOM` is producing a lot of shots from one cluster of timecodes across files, or if you need to clean-up the volume. It can be run alone with `DUMP_RANDOM` or `DUMP_INTERVAL` left unset. If set along with either `DUMP_RANDOM` or `DUMP_INTERVAL`, it will simply clear the directory before creating new screenshots.
 
