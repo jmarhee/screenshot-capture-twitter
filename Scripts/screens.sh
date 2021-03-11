@@ -1,11 +1,17 @@
 #!/bin/bash
 
 if [ -z "${LNVC_DATA_PATH}" ]; then
-    echo "No source path found." ; exit 1
+    echo "No source path found. Set LNVC_DATA_PATH." ; exit 1
 fi
 
 if [ -z "${LNVC_PREV_PATH}" ]; then
-    echo "No target path found." ; exit 1
+    echo "No target path found. Set LNVC_PREV_PATH." ; exit 1
+fi
+
+if [ -n "${IG_OPTIMIZE_COPY}"]; then 
+    if [ -z "${LNVC_PREV_PATH_IG}" ]; then
+        echo "No target path found. Set LNVC_PREV_PATH_IG." ; exit 1
+    fi
 fi
 
 if [ -n "${REFRESH_SCREENS}" ]; then
@@ -30,6 +36,13 @@ for v in `ls $LNVC_DATA_PATH`; do \
         if [ -n "${RANDOMIZE_NAMES}" ]; then
             cd $LNVC_PREV_PATH ; \
             for f in `ls`; do mv $f `head /dev/urandom | tr -dc A-Za-z0-9 | head -c 13 ; echo ''`.jpg; done
+        fi
+        # Optimize copy of images for Instagram aspect ratio 
+        if [ -n "${IG_OPTIMIZE_COPY}" ]; then
+            cd $LNVC_PREV_PATH ; \
+            for f in `ls`; do \
+                convert -define jpeg:size=300x300 $LNVC_PREV_PATH/$f -thumbnail '300x300>' \
+                -background skyblue -gravity center -extent 300x300 $LNVC_PREV_PATH_IG/$f ; done
         fi
     fi
 done

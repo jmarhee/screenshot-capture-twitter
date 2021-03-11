@@ -34,6 +34,12 @@ Keep in mind that to produce screenshots, you will need to set, either, `DUMP_RA
 
 `REFRESH_SCREENS`: When set to any value, it will purge `LNVC_PREV_PATH` of `.jpg` files; this is useful if `DUMP_RANDOM` is producing a lot of shots from one cluster of timecodes across files, or if you need to clean-up the volume. It can be run alone with `DUMP_RANDOM` or `DUMP_INTERVAL` left unset. If set along with either `DUMP_RANDOM` or `DUMP_INTERVAL`, it will simply clear the directory before creating new screenshots.
 
+### Instagram
+
+To generate Instagram optimized (400x400) versions of these screenshots, you will need `IG_OPTIMIZE_COPY` set.
+
+You will need `LNVC_PREV_PATH_IG` set to differentiate from `LNVC_PREV_PATH` which will not have Instagram-optimized images. 
+
 ## Setup
 
 To create the container for a `Job` to generate the screenshots:
@@ -73,6 +79,17 @@ docker run -it \
 -e twitter_access_token="" \
 -e twitter_access_token_secret="" \
 capture-post:latest
+```
+
+for Instagram:
+
+```bash
+docker run -it \
+-v /IG_ScreenshotDestonHost:/captures \
+-e SCREEN_SOURCE_IG=/captures \
+-e instagram_username="" \
+-e instagram_password="" \
+capture-post-ig:latest
 ```
 
 This will require a [Twitter Developer API token](developer.twitter.com). 
